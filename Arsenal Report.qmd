@@ -62,15 +62,16 @@ most_common_zones <- arsenal_24_25 |>
   arrange(desc(n))
 print(head(most_common_zones))
 ```
-
+![Shot Zones](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-09-23 144110.png){width=30%}
 ```{md}
-From this information we can tell that a majority of Arsenal's shots are central
-and inside the box. Out of 291 shots from open play, Arsenal have 63 which is a 
-18% conversion rate, which is pretty solid. 
+From the diagram and information above, we can tell that a majority of Arsenal's
+shots are central and inside the box. Out of 291 shots from open play, Arsenal 
+have scored 63 which is an solid 18% conversion rate. 
 ```
 
 ```{md}
-The narrative around Arsenal being favorites may have caused other teams styles
+The narrative around Arsenal being favorites may have caused other teams' 
+defensive styles
 of play against us to change. 
 ```
 
@@ -108,12 +109,13 @@ disappears. Opponents put more defenders between the ball and the goal, making
 it harder for Arsenal to pass and create more threatening shots. 
 
 In contrast, in previous seasons when Arsenal weren't seen as serious title 
-contenders, teams were more willing to press higher and give up more space. 
-This gave Arsenal more room in attacking areas, enabling quicker transitions 
-and more free-flowing soccer in the final third.
+contenders, teams were more willing to press higher and give up more space 
+behind them. This gave Arsenal more room in attacking areas closer to the 
+opponent goal, enabling quicker transitions and more free-flowing soccer in the 
+final third.
 
-As seen from the histogram, teams mostly have at least 5 players defending the 
-goal in their own box. 
+As seen from the histogram, teams mostly have at least 5 players excluding the 
+goalkeeper defending the goal in their own box, whenever Arsenal take a shot.
 
 ```
 ![Defending example](Screenshot 2025-07-30 184227.png){width=70%}
@@ -133,17 +135,19 @@ pressure_test <- t.test(xg ~ shot_under_pressure, data = arsenal_24_25)
 print(pressure_test)
 ```
 ```{md}
-From the above we see that shots taken with pressure have a mean xg of .14, but 
-without pressure the mean xg rises to .24. This is statistically significant 
-with a p-value of .00038, meaning that pressure has a heavy impact on how 
-threatening a shot is.
+Shots taken under defensive pressure had an average xG of 0.14, while shots 
+without pressure had an average xG of 0.24. This difference is large enough that
+it’s very unlikely to be due to chance, showing that pressure greatly reduces 
+the quality of Arsenal’s chances.
 ```
 
 
 ```{md}
 To find what areas Arsenal attack in better than others in possession, I divided
 the area into 5 spaces: the left halfspace, right halfspace, middle, left, and 
-right. I also looked at shots from set pieces.
+right. Halfspaces are channels located between the central lanes and the wide 
+areas of the pitch. I also looked at shots from set pieces, which are restarts 
+that the referee awards, such as corner kicks and free kicks
 ```
 
 ```{r}
@@ -163,8 +167,9 @@ print(attack_summary)
 From the table, we see that Arsenal are mostly reliant on attacking from the 
 wings and right halfspace, with less emphasis on the left halfspace and middle. 
 This makes sense, our most natural attacking players such as Saka, Odegaard, 
-Martinelli, Trossard, etc take these spaces up so they get the most touches and 
-influence in attack. Yet we still struggle to find that final shot. 
+Martinelli, and Trossard take these spaces up so they get the most touches and 
+influence in attack. Yet we still struggle to find that final shot that leads to
+a goal.
 
 This season, Arsenal were known to heavily rely on set pieces in tight games.
 ```
@@ -203,13 +208,13 @@ ggplot(data = arsenal_24_25, aes(x = touches_before_shot,
 ```
 
 ```{md}
-For starters, majority of our shots more than half of our shots were first time 
-shots, meaning they didn't have to touch the ball before shooting, or they only 
-took one touch to control it. What this shows is that our players very rarely 
-created shots for themselves. They had to rely on their movement and passing to 
-score. Obviously this is difficult to maintain at a high level, but still when 
-teams suffocate the passing lanes, dribbling and beating your defender with 
-skills is needed, but our team can't and doesn't do that. 
+For starters, majority of our shots were first time shots, meaning they 
+didn't have to touch the ball before shooting, or they only took one touch to 
+control it. What this shows is that our players very rarely created shots for 
+themselves. They had to rely on their movement and passing to score. Obviously 
+this is difficult to maintain at a high level, but still when teams suffocate 
+the passing lanes, dribbling and beating your defender with skills is needed, 
+but our team can't and doesn't do that. 
 ```
 
 ```{r}
@@ -234,7 +239,8 @@ print(beaten_by_goals)
 ```{md}
 22% of our goals and shots came after an Arsenal player beats a defender on the 
 dribble. For us to succeed offensively and score more goals, I'd want to see 
-this number go up next season. Hopefully that happens through the transfer window. 
+this number go up next season. Hopefully, in the tranfer window Arsenal can buy 
+a player with this ability.
 ```
 
 ```{r}
@@ -252,14 +258,14 @@ From the table, we see that our star player and starting Right Winger Bukayo
 Saka beat the most players one on one, despite missing half the season through 
 injury. Despite the injury he still has more than the 2 other Left Wingers, 
 Gabriel Martinelli and Leandro Trossard. This is very concerning as a fan. 
-Throughout the seasons Saka has been known as the player that has "carried" 
-Arsenal's attack. This table supports that. 
+Throughout the seasons Saka has been known as the player that has been the main
+man for Arsenal's attack. This table supports that. 
 
 Because of this, Saka has been known to get the "star player" treatment, 
 meaning that he'll be double teamed on defense. Despite being a great player, 
 he doesn't have the skill to constantly bypass this. However, if our 
 Left Wingers(Martinelli and Trossard) were just as effective, not only would we 
-get more shots on target, but also less pressure off Saka. 
+get more shots on target, but also this would free up space for Saka. 
 
 This has become a prominent complaint, where fans feel as if our left hand side 
 just isn't as good as our right.
@@ -289,43 +295,36 @@ potential but inconsistent quality from the right.
 
 
 ```{r, warning = FALSE}
-# Create player_beaten column first
-zone_groups <- arsenal_24_25 |>
+beaten_test <- arsenal_24_25 |>
   filter(type_of_attack != "set piece") |>
-  mutate(beaten_by = na_if(beaten_by, "n/a")) |>
-  mutate(player_beaten = ifelse(!is.na(beaten_by), "yes", "no")) |>
+  mutate(
+    beaten_by     = na_if(beaten_by, "n/a"),
+    player_beaten = if_else(!is.na(beaten_by), "yes", "no")
+  ) |>
   filter(!is.na(zone), !is.na(xg)) |>
   group_by(zone) |>
-  group_split()
-
-# Apply Wilcoxon test only where both levels exist
-beaten_test <- map_dfr(zone_groups, function(df) {
-  if (length(unique(df$player_beaten)) == 2) {
-    tibble(
-      zone = unique(df$zone),
-      p_value = wilcox.test(xg ~ player_beaten, data = df)$p.value,
-      mean_beaten = mean(df$xg[df$player_beaten == "yes"], na.rm = TRUE),
-      mean_not_beaten = mean(df$xg[df$player_beaten == "no"], na.rm = TRUE),
-      n_beaten = sum(df$player_beaten == "yes"),
-      n_not_beaten = sum(df$player_beaten == "no")
-    )
-  } else {
-    # Skip zones that don’t have both yes and no
-    NULL
-  }
-})
+  # only keep zones where both "yes" and "no" exist
+  filter(n_distinct(player_beaten) == 2) |>
+  summarise(
+    p_value         = wilcox.test(xg ~ player_beaten)$p.value,
+    mean_beaten     = mean(xg[player_beaten == "yes"], na.rm = TRUE),
+    mean_not_beaten = mean(xg[player_beaten == "no"],  na.rm = TRUE),
+    n_beaten        = sum(player_beaten == "yes"),
+    n_not_beaten    = sum(player_beaten == "no"),
+    .groups = "drop"
+  )
 
 beaten_test
 ```
 
 ```{md}
-To show that Arsenal generates more threatening shots when our attackers beat 
-defenders through the dribble, I played around with the data to see how our xg 
-increases when we beat players vs when we don't. In zone 1, you can see that 
-the p value is almost significant. In the small sample size that we have, when 
-our players beat their defender and pass into the box, it's almost always a 
-free goal. With better wingers we can see more of this. An example is in the 
-Arsenal vs Ipswich game in Gameweek 18. 
+To evaluate whether Arsenal creates more dangerous chances when attackers beat 
+defenders on the dribble, I compared xg in situations where a
+defender was beaten versus when they were not. In zone 1, you can see that the 
+p value is almost significant. In the small sample size that we have, when our 
+players beat their defender and pass into the box, it's almost always a free 
+goal. With better wingers we can see more of this. An example is in the Arsenal 
+vs Ipswich game in Gameweek 18. 
 
 https://youtu.be/62DBSHviDYY?si=A_4GZ9vwrz50L_ms&t=88
 
@@ -449,7 +448,6 @@ touchline, he effortlessly plays a pinpoint cross that his teammate is easily
 able to tap into the goal. So, he definitely has the technical ability to cross
 on his left foot that Martinelli and Trossard struggled with. 
 
-
 In the second clip, he receives the ball all the way on the left in midfield, 
 and drives into the middle and makes the defenders all attract towards him in 
 anticipation of him shooting, but he plays a pass to the right for his teammate
@@ -460,5 +458,8 @@ meaning that if he can't open up space for himself, then he'll definitely open
 up space for another teammate. This relates back to what I was saying about 
 lightening the load off the right off our star player Saka. 
 
-For me and other fans, this signing is a no brainer. 
+For me and other fans, this signing is a no brainer.
 ```
+
+
+
