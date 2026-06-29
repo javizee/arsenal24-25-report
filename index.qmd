@@ -1,7 +1,19 @@
 ---
-title: "Arsenal 24/25 Written Report QMD"
+title: "Arsenal 2024/25 Shot Analysis Report"
 author: "Javier Zialcita"
-format: html
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-fold: false
+
 editor: visual
 ---
 
@@ -12,18 +24,18 @@ source("arsenal_analysis_functions.R")
 arsenal_24_25 <- load_and_clean_arsenal_data("arsenal_24_25.csv")
 ```
 
-```{md}
-Introduction
+### Introduction
 Going into the 2024/25 season, Arsenal were meant to be the favorites to win
 the Premier League, after finishing 2nd in back to back seasons. But
 ultimately, despite a deep run in the Champions League, their inconsistency
 in the Premier League was a shock to many. Specifically, despite their
 defense still being solid, their attacking numbers declined way more from
 the 2023/24 season prior.
+
 In this report, with a dataframe of almost all the shots Arsenal took in the
 24/25 Premier League season. I will highlight their strengths and weaknesses
 from the season, and what the team can change before the season starts.
-```
+
 
 ```{r general-information}
 # General Information
@@ -36,16 +48,15 @@ count_common_shot_zones(arsenal_24_25)
 
 ![Shot Zones](img/shot-zones.png){width="30%"}
 
-```{md}
+
 From the diagram and information above, we can tell that a majority of
 Arsenal's shots are central and inside the box. Out of 291 shots from open
 play, Arsenal have scored 63 which is an solid 18% conversion rate. 
-```
 
-```{md}
+
 The narrative around Arsenal being favorites may have caused other teams' 
 defensive styles of play against us to change. 
-```
+
 
 ```{r defensive-traffic}
 summarize_defensive_line(arsenal_24_25)
