@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Javier Zialcita">
-<meta name="description" content="An analysis of Arsenal’s attacking performance in the 2024/25 Premier League season, focusing on shot creation, chance quality, and tactical trends.">
 
-<title>Arsenal 2024/25 Shot Analysis Report</title>
+<title>Arsenal 24/25 Written Report QMD</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,16 +58,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="readme_files/libs/clipboard/clipboard.min.js"></script>
-<script src="readme_files/libs/quarto-html/quarto.js"></script>
-<script src="readme_files/libs/quarto-html/popper.min.js"></script>
-<script src="readme_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="readme_files/libs/quarto-html/anchor.min.js"></script>
-<link href="readme_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="readme_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="readme_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="readme_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="readme_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -81,14 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Arsenal 2024/25 Shot Analysis Report</h1>
+<h1 class="title">Arsenal 24/25 Written Report QMD</h1>
 </div>
 
-<div>
-  <div class="description">
-    An analysis of Arsenal’s attacking performance in the 2024/25 Premier League season, focusing on shot creation, chance quality, and tactical trends.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -109,101 +103,496 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="motivation-goal" class="level1">
-<h1>Motivation / Goal</h1>
-<p>I created this project to put the skills I’ve learned through my classes at Cal Poly towards a topic I’m really passionate about and hope to pursue in the future. I’ve been supporting Arsenal Football Club since I was 7 years old and after a frustrating season, I wanted to test myself to see if I could reach some conclusions using the main programming language I’ve learned through my classes in pursuit of a statistics degree.</p>
-<p>Analysts of soccer base their reports off of this. As for the coaching and recruiting staff at Arsenal, I would’ve shown this report to them at the start of the transfer window back in June to guide them towards how they can improve their tactics, or get different players that can achieve the playstyle necessary to improve. However, people that aren’t involved in the sport professionally can still read this to gain an understanding of Arsenal’s strengths and weaknesses.</p>
-</section>
-<section id="features" class="level1">
-<h1>Features</h1>
-<p>Data cleaning and preparation: Processes Arsenal’s 2024/25 shot data (arsenal_24_25.csv), including filtering, recoding variables, and adding derived features like player_beaten and side.</p>
-<p>Shot outcome summaries: Breaks down results of shots (goal, saved, blocked, off target) and assist types (cross, through ball, cutback, set piece).</p>
-<p>Statistical testing: Uses t-tests, Wilcoxon tests, chi-square tests, and logistic regression to explore how pressure, dribbling, angle, and shot type affect chance quality and scoring.</p>
-<p>Visualizations: Produces charts showing shot zones, set piece reliance, and outcome distributions to make findings easy to see.</p>
-<p>Narrative explanations: Translates statistical results into plain language so even readers who don’t watch soccer can follow the story.</p>
-<p>Future adaptability: Regression model can be applied to future datasets to predict scoring likelihood under different conditions.</p>
-<p>I got all the data manually, by going through all 38 Arsenal game highlights on Youtube.</p>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>The dataset <code>arsenal_24_25.csv</code> contains one row per Arsenal shot in the 2024/25 season. All the variables are described below</p>
-<ul>
-<li><code>date</code> → Date of the match when shot was taken</li>
-<li><code>matchday</code> → the round of the league season in which the game was played</li>
-<li><code>opponent</code> → the team that the shot was against</li>
-<li><code>minute</code>→ the minute the shot was taken in the match</li>
-<li><code>time_of_shot_after_entry</code> → how many seconds pass between Arsenal moving the ball into the attacking area near the opponent’s goal and when they shoot</li>
-<li><code>player</code> → player who takes the shot</li>
-<li><code>result</code> → Shot outcome (goal, saved, blocked, off target, deflected off target, own goal)<br>
-</li>
-<li><code>xg</code> → a number that measures the quality of a shot by estimating how likely it is to become a goal</li>
-<li><code>body_part</code> → body part used to shoot (right, left, head, other</li>
-<li>’dominant_foot` → whether the shooter used their dominant foot or not</li>
-<li><code>final_third_entry</code> → area/method in which the ball entered the final third - “left halfspace” → area between the left and middle columns of the field - “right halfspace” → area between the right and middle columns of the field - “right corner” → corner kick taken from right side of the field - “left corner” → corner kick taken from the left side of the field - “direct freekick” → pass from a free kick awarded by the referee after a foul</li>
-<li><code>entry_method</code> → method used to enter the final third</li>
-<li><code>type_of_attack</code> → whether the shot came from transitional play, positional play, or a set piece</li>
-<li><code>pre_assist</code> → which player passed it to the player who passed to the shooter</li>
-<li>‘pre_assist_type’ → how the pre assister passed to the assister</li>
-<li><code>assisted_by</code> → player who passed it to the shooter</li>
-<li><code>assist_type</code> → how the assister passed to the shooter</li>
-<li><code>shot_type</code> → type of shot the shooter took - “normal” → a normal driven shot - “header” → a shot taken with the head while the ball is in the air - “finesse” → a curved shot with the inside of the foot - “volley” → a shot taken with the feet while the ball is in the air - “free kick” → a direct shot from a free kick situation outside the box</li>
-<li><code>touches_before_shot</code> → the number of times the shooter touches the ball before taking his shot after receiving the ball</li>
-<li><code>zone</code> → the area in which the shot was taken (refer to the figure given below)</li>
-<li><code>distance</code> → the distance from goal when the shot was taken</li>
-<li><code>shot_angle</code> → how much of the goal the shooter can see when they take the shot. - “straight” → the shooter is directly in front of the goal - “wide” → the shooter is off to the side - “narrow” → the shooter is closer to the end line at a very tight angle</li>
-<li><code>beaten_by</code> → the player that gets past a defender on the dribble leading up to the shot</li>
-<li><code>linkup_play</code> → whether or not there was quick and intricate passing between the lines before the goal</li>
-<li><code>shot_under_pressure</code> → whether or not the opposition defender is close enough to the shooter to affect his shot</li>
-<li><code>defenders_between</code> → how many defenders are directly between the shooter and the goal</li>
-<li><code>defensive_line</code> → the defensive style of the opponents - “low” → the opponents defend deep in their own half remaining very compact - “mid” → the opponents try to control the middle of the field, limiting the offense from entering the final third - “high” → the opponents press the offense in their own half, trying to win the ball and score right away</li>
-<li><code>numbers_in_box</code> → how many defensive players are in the 18 yard box at the time of shot, excluding the goalkeeper</li>
-<li><code>transition</code> → whether or not the shot resulted from an Arsenal transition from defense to attack</li>
-<li><code>defensive_error</code> → whether or not the defense made an error leading up to the shot</li>
-<li><code>opponent_formation</code> → what formation the opponent lined up with</li>
-</ul>
-</section>
-</section>
-<section id="installation-requirements" class="level1">
-<h1>Installation / Requirements</h1>
-<p>This project required the following packages - readr - tidyverse - ggplot</p>
-</section>
-<section id="usage" class="level1">
-<h1>Usage</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>(<span class="st">"Arsenal Report.qmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"arsenal_analysis_functions.R"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>arsenal_24_25 <span class="ot">&lt;-</span> <span class="fu">load_and_clean_arsenal_data</span>(<span class="st">"arsenal_24_25.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>View the report:</strong> <a href="Arsenal%20Report.html">Arsenal Report (HTML)</a></p>
-</section>
-<section id="key-findings" class="level1">
-<h1>Key Findings</h1>
-<p>Shot efficiency: Arsenal generated 291 open-play shots and converted 63 of them (about an 18% success rate). Most of these looks came from central areas inside the box.</p>
-<p>Pressure impact: When defenders applied pressure, Arsenal’s shots dropped to an average xG of 0.14. Without pressure, that number nearly doubled to 0.24. Pressure clearly reduced the quality of chances.</p>
-<p>Set piece reliance: 22% of goals came from set pieces. For a team that should be controlling open play, that’s a high number and shows how often Arsenal leaned on dead-ball situations to score.</p>
-<p>Wing imbalance: The attack tilted heavily to the right side through Saka and Ødegaard. Even though he missed half the season, Saka still accounted for about 30% of successful dribbles. On the left, Martinelli and Trossard weren’t nearly as effective, leaving the attack lopsided.</p>
-<p>Dribbling threat: Around 22% of all shots and goals came right after a player beat a defender one-on-one. That’s a huge share and shows how dangerous Arsenal can be when someone breaks a line. With stronger wide players, this could become a consistent weapon.</p>
-</section>
-<section id="setbacks" class="level1">
-<h1>Setbacks</h1>
-<ul>
-<li>small sample sizes for certain shot types and situations</li>
-<li>tedious to create this dataset myself by watching videos, ideally I’d have more resources like the professionals do</li>
-<li>some variables such as time_of_shot_after_entry, defensive_line, and defenders_between were up to interpretation and weren’t exact</li>
-<li>some results weren’t statistically significant, but they still highlighted patterns (such as imbalance between wings) that are meaningful for tactical analysis</li>
-</ul>
-</section>
-<section id="future-work" class="level1">
-<h1>Future Work</h1>
-<ul>
-<li>add some kind of defensive analysis</li>
-<li>add player level breakdowns using websites and webscraping</li>
-<li>visualization upgrades such as heatmaps or pitch control</li>
-<li>build a fitted model and apply it to data from a different season or team</li>
-</ul>
-</section>
-<section id="acknowledgements" class="level1">
-<h1>Acknowledgements</h1>
-<p>Thank you to Understat for providing xg data and the opensource tools and libraries in R. Special thanks to the Arsenal community and YouTube highlights for making manual data collection possible.</p>
-</section>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Introduction</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Going into the 2024/25 season, Arsenal were meant to be the favorites to win</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>the Premier League, after finishing 2nd in back to back seasons. But</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ultimately, despite a deep run in the Champions League, their inconsistency</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>in the Premier League was a shock to many. Specifically, despite their</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>defense still being solid, their attacking numbers declined way more from</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>the 2023/24 season prior.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>In this report, with a dataframe of almost all the shots Arsenal took in the</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>24/25 Premier League season. I will highlight their strengths and weaknesses</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>from the season, and what the team can change before the season starts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General Information</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_general_summary</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  total_shots goals avg_xg
+        &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+1         291    63   0.18</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count_shot_results</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  result                   n
+  &lt;chr&gt;                &lt;int&gt;
+1 off target              95
+2 saved                   75
+3 goal                    63
+4 blocked                 47
+5 deflected off target    10
+6 own goal                 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count_frequent_shooters</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  player                 n
+  &lt;chr&gt;              &lt;int&gt;
+1 Leandro Trossard      39
+2 Bukayo Saka           33
+3 Declan Rice           30
+4 Gabriel Martinelli    28
+5 Kai Havertz           27
+6 Mikel Merino          25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count_common_assist_types</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  assist_type       n
+  &lt;chr&gt;         &lt;int&gt;
+1 normal pass     108
+2 floated cross    33
+3 n/a              33
+4 corner           29
+5 through ball     21
+6 driven cross     19</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count_common_shot_zones</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   zone     n
+  &lt;dbl&gt; &lt;int&gt;
+1     2   117
+2     1    54
+3     3    37
+4     4    34
+5     5    28
+6     7     8</code></pre>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/shot-zones.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption>Shot Zones</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>From the diagram and information above, we can tell that a majority of</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Arsenal's shots are central and inside the box. Out of 291 shots from open</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>play, Arsenal have scored 63 which is an solid 18% conversion rate. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>The narrative around Arsenal being favorites may have caused other teams' </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>defensive styles of play against us to change. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_defensive_line</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  defensive_line total percentage
+  &lt;chr&gt;          &lt;int&gt;      &lt;dbl&gt;
+1 high              37       12.7
+2 low              165       56.7
+3 mid               89       30.6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_defensive_box_traffic</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/defensive-traffic-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Now that Arsenal are favorites, Premier League teams "respect" them more, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>meaning they give Arsenal more space to play out the back and advance</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>towards the opposing teams' box. This usually means they sit deeper and give</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>Arsenal more space in their own defensive third, allowing them to build out</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>from the back with relative ease. Arsenal’s technical quality and passing</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>precision make them very effective at progressing the ball through these</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>early phases.</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>However, as soon as Arsenal approaches the final third, all that space </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>disappears. Opponents put more defenders between the ball and the goal, </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>making it harder for Arsenal to pass and create more threatening shots. </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>In contrast, in previous seasons when Arsenal weren't seen as serious title </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>contenders, teams were more willing to press higher and give up more space </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>behind them. This gave Arsenal more room in attacking areas closer to the </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>opponent goal, enabling quicker transitions and more free-flowing soccer in </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>the final third.</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>As seen from the histogram, teams mostly have at least 5 players excluding </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>the goalkeeper defending the goal in their own box, whenever Arsenal take a </span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>shot.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/brentford-defending.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Defending example</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>As one can see in the photo above from Arsenal vs Brentford in January. With</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Brentford having all their players behind the ball, it's very difficult for </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Arsenal to have a shot that's very likely of scoring. This was a common</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>theme in Arsenal games, and one that proved very difficult for Arsenal. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>As a result teams always get pressure on the player shooting which puts them</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>off.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_pressure_xg_difference</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  xg by shot_under_pressure
+t = 3.624, df = 168.66, p-value = 0.0003838
+alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+95 percent confidence interval:
+ 0.04350852 0.14762971
+sample estimates:
+ mean in group no mean in group yes 
+        0.2401887         0.1446196 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Shots taken under defensive pressure had an average xG of 0.14, while shots </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>without pressure had an average xG of 0.24. This difference is large enough</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>that it’s very unlikely to be due to chance, showing that pressure greatly</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>reduces the quality of Arsenal’s chances.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>To find what areas Arsenal attack in better than others in possession, I</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>divided the area into 5 spaces: the left halfspace, right halfspace, middle,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>left, and right. Halfspaces are channels located between the central lanes</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>and the wide areas of the pitch. I also looked at shots from set pieces,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>which are restarts that the referee awards, such as corner kicks and free</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>kicks.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_attack_entries</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  entry_type      count   prop
+  &lt;chr&gt;           &lt;int&gt;  &lt;dbl&gt;
+1 left               49 0.181 
+2 left halfspace     37 0.137 
+3 middle             27 0.0996
+4 right              50 0.185 
+5 right halfspace    48 0.177 
+6 set piece          60 0.221 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>From the table, we see that Arsenal are mostly reliant on attacking from the</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>wings and right halfspace, with less emphasis on the left halfspace and</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>middle. This makes sense, our most natural attacking players such as Saka,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>Odegaard, Martinelli, and Trossard take these spaces up so they get the most</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>touches and influence in attack. Yet we still struggle to find that final</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>shot that leads to a goal.</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>This season, Arsenal were known to heavily rely on set pieces in tight </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>games.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_set_piece_goal_percentage</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 22.22222</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>In fact 22.2% of Arsenal's goals were from set pieces. As a team that is </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>supposed to dominate games, this is very concerning because it highlights</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>how uninspired our creation was from open play relative to prior seasons.</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>The numbers and eye test prove this.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>From a fan's perspective, I think a lot of our lack of creation stems from</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>the fact that we don't have world class playmakers on this team. A lot of</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>our players depend on the system, rather than making big plays by</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>themselves. To gain insight into this, I checked how often our players</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>dribble and where.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_touches_before_shot</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/touches-before-shot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>For starters, majority of our shots were first time shots, meaning they </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>didn't have to touch the ball before shooting, or they only took one touch</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>to control it. What this shows is that our players very rarely created shots</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>for themselves. They had to rely on their movement and passing to score.</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>Obviously this is difficult to maintain at a high level, but still when</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>teams suffocate the passing lanes, dribbling and beating your defender with</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>skills is needed, but our team can't and doesn't do that. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_shots_after_beating_defender</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  total_shots shots_after_beating_defender proportion
+        &lt;int&gt;                        &lt;int&gt;      &lt;dbl&gt;
+1         291                           67      0.230</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_goals_after_beating_defender</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  total_goals goals_after_beating_defender proportion
+        &lt;int&gt;                        &lt;int&gt;      &lt;dbl&gt;
+1          63                           15      0.238</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>22% of our goals and shots came after an Arsenal player beats a defender on</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>the dribble. For us to succeed offensively and score more goals, I'd want to</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>see this number go up next season. Hopefully, in the transfer window Arsenal</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>can buy a player with this ability.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank_defender_beating_players</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+   beaten_by          times_beaten_defender proportion
+   &lt;chr&gt;                              &lt;int&gt;      &lt;dbl&gt;
+ 1 Bukayo Saka                           20     0.299 
+ 2 Gabriel Martinelli                    10     0.149 
+ 3 Leandro Trossard                       8     0.119 
+ 4 Ethan Nwaneri                          6     0.0896
+ 5 Martin Odegaard                        6     0.0896
+ 6 Declan Rice                            5     0.0746
+ 7 Jurrien Timber                         5     0.0746
+ 8 Gabriel Jesus                          2     0.0299
+ 9 Raheem Sterling                        2     0.0299
+10 Ben White                              1     0.0149
+11 Myles Lewis-Skelly                     1     0.0149
+12 Riccardo Calafiori                     1     0.0149</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>From the table, we see that our star player and starting Right Winger Bukayo</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>Saka beat the most players one on one, despite missing half the season</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>through injury. Despite the injury he still has more than the 2 other Left</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>Wingers, Gabriel Martinelli and Leandro Trossard. This is very concerning as</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>a fan. Throughout the seasons Saka has been known as the player that has</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>been the main man for Arsenal's attack. This table supports that. </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>Because of this, Saka has been known to get the "star player" treatment, </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>meaning that he'll be double teamed on defense. Despite being a great</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>player, he doesn't have the skill to constantly bypass this. However, if our</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>Left Wingers(Martinelli and Trossard) were just as effective, not only would</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>we get more shots on target, but also this would free up space for Saka. </span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>This has become a prominent complaint, where fans feel as if our left hand</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>side just isn't as good as our right.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_xg_by_wing_entry</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/wing-entry-xg-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>I observed that the right side tends to produce higher upper-end xG chances,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>though this difference wasn’t statistically significant. This may suggest </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>potential but inconsistent quality from the right. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_beating_defender_xg_by_zone</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 6
+   zone p_value mean_beaten mean_not_beaten n_beaten n_not_beaten
+  &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;    &lt;int&gt;        &lt;int&gt;
+1     1  0.0555      0.638           0.390         4           23
+2     2  0.811       0.204           0.199        25           68
+3     3  0.277       0.0782          0.129        11           23
+4     4  0.399       0.0692          0.0711       12           19
+5     5  0.263       0.05            0.0395        6           19
+6     6  1           0.035           0.03          4            1
+7     8  1           0.02            0.02          2            4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>To evaluate whether Arsenal creates more dangerous chances when attackers</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>beat defenders on the dribble, I compared xg in situations where a defender</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>was beaten versus when they were not. In zone 1, you can see that the p</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>value is almost significant. In the small sample size that we have, when our</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>players beat their defender and pass into the box, it's almost always a free</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>goal. With better wingers we can see more of this. An example is in the </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>Arsenal vs Ipswich game in Gameweek 18. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://youtu.be/62DBSHviDYY?si=A_4GZ9vwrz50L_ms&amp;t=88">Arsenal vs Ipswich GW18 — Saka dribble in zone 1</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>In the few instances that aren't shown in this dataset due to the crosses </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>not being completed, that's because our strikers didn't make contact with </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>the ball, but with the addition of Viktor Gyokeres, a more pure striker and </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>goalscorer, he'll be scoring these more often and that's how we can get to </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>use him more. </span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>For the rest of the shooting zones, there are other factors to account for </span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>such as angle and how many defenders are between the ball and the goal, so </span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>the xg is more random.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>With this issue of struggling to score against low blocks, the ability to </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>capitalize on transition goals where defenses are caught out is vital. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_transition_shots</span>(arsenal_24_25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  total average_xg average_time_to_shoot num_goals goals_prop
+  &lt;int&gt;      &lt;dbl&gt;                 &lt;dbl&gt;     &lt;int&gt;      &lt;dbl&gt;
+1    36      0.180                  6.09        11      0.306</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Some fans believe that Arsenal were too slow in transition compared to </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>seasons prior. I took a look at all shots from transition. The average xg </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>from transitions is higher than the total average, but the time to shoot is </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>pretty long, which makes it easier for defenders to get back and protect </span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>their goal. Overall, our transition lacked creativity, decision making, and</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>efficiency.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://youtu.be/siDxiv91yTI?si=EMSB9jd4TNkVSauI">Arsenal transition example — Martinelli GW decision making</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>As you can see there are many issues in this shot. Martinelli makes a really</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>bad decision to shoot with the defender recovering to block the goal, but</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>also Martinelli has no options that he can pass to for a better shot. It all</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>looks very bland and unexciting. This was a common theme me and many other</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>fans noticed from watching. We scored 30% of our transition goals, but it</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>could've been better. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>After this season, many fans believed the main target should be a Left Wing,</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>and after playing around with the data, I believe the data supports this. </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>The statistics major in me is troubled because not everything was </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>statistically significant, however, the football fan, watcher, and even </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>player part of me knows the saying that "Football is a game of small </span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>margins".</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>The player that the media is saying that Arsenal is monitoring is Eberechi </span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>Eze. Eze is a talented playmaker, dribbler, and finisher. The main concern </span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>is that he's primarily a Center Attacking Mid and not a touchline Winger. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_player_shots_by_zone</span>(arsenal_24_25, <span class="st">"Leandro Trossard"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 3
+   zone shots proportion
+  &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+1     2    15     0.385 
+2     4    11     0.282 
+3     1     6     0.154 
+4     3     3     0.0769
+5     7     2     0.0513
+6     5     1     0.0256
+7     8     1     0.0256</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_player_shots_by_zone</span>(arsenal_24_25, <span class="st">"Gabriel Martinelli"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+   zone shots proportion
+  &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+1     2    12     0.429 
+2     4     7     0.25  
+3     1     6     0.214 
+4     3     2     0.0714
+5     6     1     0.0357</code></pre>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/eberechi-eze-heatmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Eberechi Eze 2023/2024 Heatmap</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/gabriel-martinelli-heatmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Gabriel Martinelli 2024/2025 Heatmap</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/leandro-trossard-heatmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Leandro Trossard 2024/2025 Heatmap</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>From the heatmaps we can see that all three players have a lot of touches on</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>the touchline, so although Eze operated more frequently in the middle of the</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>field last season, he has enough experience that could be useful for Arsenal</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>on the left. That season, Eze also had a 52% dribble success rate which is </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>higher than Martinelli(35%) and Trossard(51%), while also scoring more goals</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>(11) than Martinelli and Trossard. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/eberechi-eze-shotmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Eberechi Eze 2024/2025 Shotmap</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>Knowing Eze as a player and seeing both his heatmap and shotmap, I would </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>come to the conclusion that he simply "generates football". What that means </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>in the football community is that no matter what position on the field he's </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>playing, I would expect him to make an impact. The reason I say this is that</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>he can shoot, dribble, and pass in the middle and left part of the field. </span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>After being such a robotic and bland team in offense, this is exactly what I</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>think Arsenal need to take a big step towards winning a trophy. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://youtu.be/ocwPznvEyqk?si=akr-F37EoKj9Nomt&amp;t=423">Eze left-side cross</a></p>
+<p><a href="https://youtu.be/ocwPznvEyqk?si=ZGSb3zYD68OXvGRn&amp;t=510">Eze driving inside and creating space</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Outside of the numbers and maps, I provided two clips that showcase Eze's </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>ability to play on the left. In the first link, after being trapped on the </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>touchline, he effortlessly plays a pinpoint cross that his teammate is</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>easily able to tap into the goal. So, he definitely has the technical</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>ability to cross on his left foot that Martinelli and Trossard struggled</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>with. </span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>In the second clip, he receives the ball all the way on the left in</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>midfield, and drives into the middle and makes the defenders all attract</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>towards him in anticipation of him shooting, but he plays a pass to the</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>right for his teammate to be wide open to shoot. </span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>This is an example of Eze having so much gravity as a dribbler and</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>playmaker, meaning that if he can't open up space for himself, then he'll</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>definitely open up space for another teammate. This relates back to what I</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>was saying about lightening the load off the right off our star player Saka.</span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>For me and other fans, this signing is a no brainer.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 </main>
 <!-- /main column -->
