@@ -3,6 +3,7 @@ title: "Arsenal 24/25 Written Report QMD"
 format: html
 editor: visual
 ---
+
 ```{r message=FALSE, warning=FALSE, echo=TRUE}
 library(readr)
 library(tidyverse)
@@ -62,7 +63,9 @@ most_common_zones <- arsenal_24_25 |>
   arrange(desc(n))
 print(head(most_common_zones))
 ```
-![Shot Zones](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-09-23 144110.png){width=30%}
+
+![Shot Zones](img/shot-zones.png){width="30%"}
+
 ```{md}
 From the diagram and information above, we can tell that a majority of Arsenal's
 shots are central and inside the box. Out of 291 shots from open play, Arsenal 
@@ -96,6 +99,7 @@ ggplot(
 
 
 ```
+
 ```{md}
 Now that Arsenal are favorites, Premier League teams "respect" them more, 
 meaning they give Arsenal more space to play out the back and advance towards 
@@ -118,7 +122,9 @@ As seen from the histogram, teams mostly have at least 5 players excluding the
 goalkeeper defending the goal in their own box, whenever Arsenal take a shot.
 
 ```
-![Defending example](Screenshot 2025-07-30 184227.png){width=70%}
+
+![Defending example](Screenshot%202025-07-30%20184227.png){width="70%"}
+
 ```{md}
 As one can see in the photo above from Arsenal vs Brentford in January. With 
 Brentford having all their players behind the ball, it's very difficult for 
@@ -134,13 +140,13 @@ As a result teams always get pressure on the player shooting which puts them off
 pressure_test <- t.test(xg ~ shot_under_pressure, data = arsenal_24_25)
 print(pressure_test)
 ```
+
 ```{md}
 Shots taken under defensive pressure had an average xG of 0.14, while shots 
 without pressure had an average xG of 0.24. This difference is large enough that
 it’s very unlikely to be due to chance, showing that pressure greatly reduces 
 the quality of Arsenal’s chances.
 ```
-
 
 ```{md}
 To find what areas Arsenal attack in better than others in possession, I divided
@@ -253,6 +259,7 @@ best_dribblers_summary <- arsenal_24_25 |>
   arrange(desc(times_beaten_defender))
 print(best_dribblers_summary)
 ```
+
 ```{md}
 From the table, we see that our star player and starting Right Winger Bukayo 
 Saka beat the most players one on one, despite missing half the season through 
@@ -292,7 +299,6 @@ I observed that the right side tends to produce higher upper-end xG chances,
 though this difference wasn’t statistically significant. This may suggest 
 potential but inconsistent quality from the right. 
 ```
-
 
 ```{r, warning = FALSE}
 beaten_test <- arsenal_24_25 |>
@@ -338,7 +344,6 @@ as angle and how many defenders are between the ball and the goal, so the xg
 is more random.
 ```
 
-
 ```{md}
 With this issue of struggling to score against low blocks, the ability to 
 capitalize on transition goals where defenses are caught out is vital. 
@@ -373,7 +378,6 @@ and many other fans noticed from watching. We scored 30% of our transition
 goals, but it could've been better. 
 ```
 
-
 ```{md}
 After this season, many fans believed the main target should be a Left Wing, 
 and after playing around with the data, I believe the data supports this. The 
@@ -385,7 +389,6 @@ The player that the media is saying that Arsenal is monitoring is Eberechi Eze.
 Eze is a talented playmaker, dribbler, and finisher. The main concern is that 
 he's primarily a Center Attacking Mid and not a touchline Winger. 
 ```
-
 
 ```{r}
 trossard_shots <- arsenal_24_25 |>
@@ -404,12 +407,11 @@ martinelli_shots <- arsenal_24_25 |>
 print(martinelli_shots)
 ```
 
-![Eberechi Eze 2023/2024 Heatmap](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-08-05 171608.png){width=70%}
+![Eberechi Eze 2023/2024 Heatmap](img/eberechi-eze-heatmap.png){width="70%"}
 
-![Gabriel Martinelli 2024/2025 Heatmap](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-08-04 194939.png){width=70%}
+![Gabriel Martinelli 2024/2025 Heatmap](img/gabriel-martinelli-heatmap.png){width="70%"}
 
-![Leandro Trossard 2024/2025 Heatmap](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-08-05 170719.png){width=70%}
-
+![Leandro Trossard 2024/2025 Heatmap](img/leandro-trossard-heatmap.png){width="70%"}
 
 ```{md}
 From the heatmaps we can see that all three players have a lot of touches on 
@@ -420,7 +422,7 @@ higher than Martinelli(35%) and Trossard(51%), while also scoring more goals
 (11) than Martinelli and Trossard. 
 ```
 
-![Eberechi Eze 2024/2025 Shotmap](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot 2025-08-05 172229.png){width=70%}
+![Eberechi Eze 2024/2025 Shotmap](C:/Users/javie/OneDrive/Pictures/Screenshots/Screenshot%202025-08-05%20172229.png){width="70%"}
 
 ```{md}
 Knowing Eze as a player and seeing both his heatmap and shotmap, I would come 
@@ -433,7 +435,6 @@ After being such a robotic and bland team in offense, this is exactly what I
 think Arsenal need to take a big step towards winning a trophy. 
 
 ```
-
 
 ```{md}
 
@@ -460,6 +461,3 @@ lightening the load off the right off our star player Saka.
 
 For me and other fans, this signing is a no brainer.
 ```
-
-
-
