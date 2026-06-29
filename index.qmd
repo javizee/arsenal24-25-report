@@ -24,7 +24,7 @@ source("arsenal_analysis_functions.R")
 arsenal_24_25 <- load_and_clean_arsenal_data("arsenal_24_25.csv")
 ```
 
-### Introduction
+#### Introduction
 Going into the 2024/25 season, Arsenal were meant to be the favorites to win
 the Premier League, after finishing 2nd in back to back seasons. But
 ultimately, despite a deep run in the Champions League, their inconsistency
