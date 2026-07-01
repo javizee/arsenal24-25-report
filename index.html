@@ -47,12 +47,39 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#arsenals-shooting-profile" id="toc-arsenals-shooting-profile" class="nav-link" data-scroll-target="#arsenals-shooting-profile">Arsenal’s Shooting Profile</a></li>
-  <li><a href="#how-opponents-defended-arsenal" id="toc-how-opponents-defended-arsenal" class="nav-link" data-scroll-target="#how-opponents-defended-arsenal">How Opponents Defended Arsenal</a></li>
-  <li><a href="#arsenals-chance-creation" id="toc-arsenals-chance-creation" class="nav-link" data-scroll-target="#arsenals-chance-creation">Arsenal’s Chance Creation</a></li>
-  <li><a href="#individual-shot-creation-and-dribbling" id="toc-individual-shot-creation-and-dribbling" class="nav-link" data-scroll-target="#individual-shot-creation-and-dribbling">Individual Shot Creation and Dribbling</a></li>
+  <li><a href="#arsenals-shooting-profile" id="toc-arsenals-shooting-profile" class="nav-link" data-scroll-target="#arsenals-shooting-profile">Arsenal’s Shooting Profile</a>
+  <ul class="collapse">
+  <li><a href="#overall-summary" id="toc-overall-summary" class="nav-link" data-scroll-target="#overall-summary">Overall Summary</a></li>
+  <li><a href="#shot-outcomes" id="toc-shot-outcomes" class="nav-link" data-scroll-target="#shot-outcomes">Shot Outcomes</a></li>
+  <li><a href="#leading-shooters" id="toc-leading-shooters" class="nav-link" data-scroll-target="#leading-shooters">Leading Shooters</a></li>
+  <li><a href="#assist-types" id="toc-assist-types" class="nav-link" data-scroll-target="#assist-types">Assist Types</a></li>
+  <li><a href="#shot-zones" id="toc-shot-zones" class="nav-link" data-scroll-target="#shot-zones">Shot Zones</a></li>
+  </ul></li>
+  <li><a href="#how-opponents-defended-arsenal" id="toc-how-opponents-defended-arsenal" class="nav-link" data-scroll-target="#how-opponents-defended-arsenal">How Opponents Defended Arsenal</a>
+  <ul class="collapse">
+  <li><a href="#defensive-line" id="toc-defensive-line" class="nav-link" data-scroll-target="#defensive-line">Defensive Line</a></li>
+  <li><a href="#defensive-traffic" id="toc-defensive-traffic" class="nav-link" data-scroll-target="#defensive-traffic">Defensive Traffic</a></li>
+  <li><a href="#pressure-and-shot-quality" id="toc-pressure-and-shot-quality" class="nav-link" data-scroll-target="#pressure-and-shot-quality">Pressure and Shot Quality</a></li>
+  </ul></li>
+  <li><a href="#arsenals-chance-creation" id="toc-arsenals-chance-creation" class="nav-link" data-scroll-target="#arsenals-chance-creation">Arsenal’s Chance Creation</a>
+  <ul class="collapse">
+  <li><a href="#final-third-entries" id="toc-final-third-entries" class="nav-link" data-scroll-target="#final-third-entries">Final-Third Entries</a></li>
+  <li><a href="#set-piece-reliance" id="toc-set-piece-reliance" class="nav-link" data-scroll-target="#set-piece-reliance">Set-Piece Reliance</a></li>
+  </ul></li>
+  <li><a href="#individual-shot-creation-and-dribbling" id="toc-individual-shot-creation-and-dribbling" class="nav-link" data-scroll-target="#individual-shot-creation-and-dribbling">Individual Shot Creation and Dribbling</a>
+  <ul class="collapse">
+  <li><a href="#touches-before-shot" id="toc-touches-before-shot" class="nav-link" data-scroll-target="#touches-before-shot">Touches Before Shot</a></li>
+  <li><a href="#defender-beating-actions" id="toc-defender-beating-actions" class="nav-link" data-scroll-target="#defender-beating-actions">Defender-Beating Actions</a></li>
+  <li><a href="#left-side-vs.-right-side" id="toc-left-side-vs.-right-side" class="nav-link" data-scroll-target="#left-side-vs.-right-side">Left Side vs.&nbsp;Right Side</a></li>
+  <li><a href="#dribbling-impact-by-zone" id="toc-dribbling-impact-by-zone" class="nav-link" data-scroll-target="#dribbling-impact-by-zone">Dribbling Impact by Zone</a></li>
+  </ul></li>
   <li><a href="#transition-attacking" id="toc-transition-attacking" class="nav-link" data-scroll-target="#transition-attacking">Transition Attacking</a></li>
-  <li><a href="#transfer-recommendation-eberechi-eze" id="toc-transfer-recommendation-eberechi-eze" class="nav-link" data-scroll-target="#transfer-recommendation-eberechi-eze">Transfer Recommendation: Eberechi Eze</a></li>
+  <li><a href="#transfer-recommendation-eberechi-eze" id="toc-transfer-recommendation-eberechi-eze" class="nav-link" data-scroll-target="#transfer-recommendation-eberechi-eze">Transfer Recommendation: Eberechi Eze</a>
+  <ul class="collapse">
+  <li><a href="#current-left-wing-shot-zones" id="toc-current-left-wing-shot-zones" class="nav-link" data-scroll-target="#current-left-wing-shot-zones">Current Left-Wing Shot Zones</a></li>
+  <li><a href="#player-heatmaps" id="toc-player-heatmaps" class="nav-link" data-scroll-target="#player-heatmaps">Player Heatmaps</a></li>
+  <li><a href="#eze-shot-map" id="toc-eze-shot-map" class="nav-link" data-scroll-target="#eze-shot-map">Eze Shot Map</a></li>
+  </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -86,61 +113,200 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Going into the 2024/25 season, Arsenal were meant to be the favorites to win the Premier League, after finishing 2nd in back to back seasons. But ultimately, despite a deep run in the Champions League, their inconsistency in the Premier League was a shock to many. Specifically, despite their defense still being solid, their attacking numbers declined way more from the 2023/24 season prior.</p>
-<p>In this report, with a dataframe of almost all the shots Arsenal took in the 24/25 Premier League season, I will highlight their strengths and weaknesses from the season, and what the team can change before the season starts.</p>
+<p>Going into the 2024/25 season, Arsenal were meant to be the favorites to win the Premier League after finishing 2nd in back-to-back seasons. But ultimately, despite a deep run in the Champions League, their inconsistency in the Premier League was a shock to many. Specifically, despite their defense still being solid, their attacking numbers declined way more from the 2023/24 season prior.</p>
+<p>In this report, using a dataframe of almost all the shots Arsenal took in the 2024/25 Premier League season, I will highlight their strengths and weaknesses from the season and what the team can change before the next season starts.</p>
 </section>
 <section id="arsenals-shooting-profile" class="level1">
 <h1>Arsenal’s Shooting Profile</h1>
+<section id="overall-summary" class="level2">
+<h2 class="anchored" data-anchor-id="overall-summary">Overall Summary</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  total_shots goals avg_xg
-        &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
-1         291    63   0.18</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Overall Shot Summary</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">total_shots</th>
+<th style="text-align: center;">goals</th>
+<th style="text-align: center;">avg_xg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">291</td>
+<td style="text-align: center;">63</td>
+<td style="text-align: center;">0.18</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  result                   n
-  &lt;chr&gt;                &lt;int&gt;
-1 off target              95
-2 saved                   75
-3 goal                    63
-4 blocked                 47
-5 deflected off target    10
-6 own goal                 1</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  player                 n
-  &lt;chr&gt;              &lt;int&gt;
-1 Leandro Trossard      39
-2 Bukayo Saka           33
-3 Declan Rice           30
-4 Gabriel Martinelli    28
-5 Kai Havertz           27
-6 Mikel Merino          25</code></pre>
+</section>
+<section id="shot-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="shot-outcomes">Shot Outcomes</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Shot Results</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">result</th>
+<th style="text-align: center;">shots</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">off target</td>
+<td style="text-align: center;">95</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">saved</td>
+<td style="text-align: center;">75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">goal</td>
+<td style="text-align: center;">63</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">blocked</td>
+<td style="text-align: center;">47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">deflected off target</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">own goal</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  assist_type       n
-  &lt;chr&gt;         &lt;int&gt;
-1 normal pass     108
-2 floated cross    33
-3 n/a              33
-4 corner           29
-5 through ball     21
-6 driven cross     19</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-   zone     n
-  &lt;dbl&gt; &lt;int&gt;
-1     2   117
-2     1    54
-3     3    37
-4     4    34
-5     5    28
-6     7     8</code></pre>
+</section>
+<section id="leading-shooters" class="level2">
+<h2 class="anchored" data-anchor-id="leading-shooters">Leading Shooters</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Most Frequent Shooters</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">player</th>
+<th style="text-align: center;">shots</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Leandro Trossard</td>
+<td style="text-align: center;">39</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Bukayo Saka</td>
+<td style="text-align: center;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Declan Rice</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gabriel Martinelli</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Kai Havertz</td>
+<td style="text-align: center;">27</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Mikel Merino</td>
+<td style="text-align: center;">25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="assist-types" class="level2">
+<h2 class="anchored" data-anchor-id="assist-types">Assist Types</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Most Common Assist Types</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">assist_type</th>
+<th style="text-align: center;">shots</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">normal pass</td>
+<td style="text-align: center;">108</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">floated cross</td>
+<td style="text-align: center;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">corner</td>
+<td style="text-align: center;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">through ball</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">driven cross</td>
+<td style="text-align: center;">19</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="shot-zones" class="level2">
+<h2 class="anchored" data-anchor-id="shot-zones">Shot Zones</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Most Common Shot Zones</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">zone</th>
+<th style="text-align: center;">shots</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">117</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">37</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">8</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -151,18 +317,47 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>From the diagram and information above, we can tell that a majority of Arsenal’s shots are central and inside the box. Out of 291 shots from open play, Arsenal scored 63, which is an 18% conversion rate.</p>
 </section>
+</section>
 <section id="how-opponents-defended-arsenal" class="level1">
 <h1>How Opponents Defended Arsenal</h1>
 <p>The narrative around Arsenal being favorites may have caused other teams’ defensive styles of play against them to change.</p>
+<section id="defensive-line" class="level2">
+<h2 class="anchored" data-anchor-id="defensive-line">Defensive Line</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  defensive_line total percentage
-  &lt;chr&gt;          &lt;int&gt;      &lt;dbl&gt;
-1 high              37       12.7
-2 low              165       56.7
-3 mid               89       30.6</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Opponent Defensive Line Types</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">defensive_line</th>
+<th style="text-align: center;">total</th>
+<th style="text-align: center;">percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">low</td>
+<td style="text-align: center;">165</td>
+<td style="text-align: center;">56.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mid</td>
+<td style="text-align: center;">89</td>
+<td style="text-align: center;">30.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">high</td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">12.7</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+</section>
+<section id="defensive-traffic" class="level2">
+<h2 class="anchored" data-anchor-id="defensive-traffic">Defensive Traffic</h2>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -181,52 +376,119 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>As one can see in the photo above from Arsenal vs Brentford in January, Brentford had all their players behind the ball. This made it very difficult for Arsenal to create a shot that was very likely to score.</p>
+</section>
+<section id="pressure-and-shot-quality" class="level2">
+<h2 class="anchored" data-anchor-id="pressure-and-shot-quality">Pressure and Shot Quality</h2>
 <p>As a result, teams often get pressure on the player shooting.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Welch Two Sample t-test
-
-data:  xg by shot_under_pressure
-t = 3.624, df = 168.66, p-value = 0.0003838
-alternative hypothesis: true difference in means between group no and group yes is not equal to 0
-95 percent confidence interval:
- 0.04350852 0.14762971
-sample estimates:
- mean in group no mean in group yes 
-        0.2401887         0.1446196 </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Effect of Defensive Pressure on xG</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">mean_xg_no_pressure</th>
+<th style="text-align: center;">mean_xg_under_pressure</th>
+<th style="text-align: center;">difference</th>
+<th style="text-align: center;">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.24</td>
+<td style="text-align: center;">0.145</td>
+<td style="text-align: center;">0.096</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Shots taken under defensive pressure had an average xG of 0.14, while shots without pressure had an average xG of 0.24. This difference is large enough that it is very unlikely to be due to chance, showing that pressure greatly reduces the quality of Arsenal’s chances.</p>
 </section>
+</section>
 <section id="arsenals-chance-creation" class="level1">
 <h1>Arsenal’s Chance Creation</h1>
 <p>To find what areas Arsenal attack in better than others in possession, I divided the area into 5 spaces: the left halfspace, right halfspace, middle, left, and right. I also looked at shots from set pieces, which are restarts that the referee awards, such as corner kicks and free kicks.</p>
+<section id="final-third-entries" class="level2">
+<h2 class="anchored" data-anchor-id="final-third-entries">Final-Third Entries</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  entry_type      count   prop
-  &lt;chr&gt;           &lt;int&gt;  &lt;dbl&gt;
-1 left               49 0.181 
-2 left halfspace     37 0.137 
-3 middle             27 0.0996
-4 right              50 0.185 
-5 right halfspace    48 0.177 
-6 set piece          60 0.221 </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Final-Third Entry Types</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">entry_type</th>
+<th style="text-align: center;">count</th>
+<th style="text-align: center;">prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">set piece</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">0.221</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">right</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">0.185</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">left</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">0.181</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">right halfspace</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">0.177</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">left halfspace</td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">0.137</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">middle</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">0.100</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>From the table, we see that Arsenal are mostly reliant on attacking from the wings and right halfspace, with less emphasis on the left halfspace and middle. This makes sense because players such as Saka, Odegaard, Martinelli, and Trossard often take up these spaces.</p>
+</section>
+<section id="set-piece-reliance" class="level2">
+<h2 class="anchored" data-anchor-id="set-piece-reliance">Set-Piece Reliance</h2>
 <p>This season, Arsenal were also known to heavily rely on set pieces in tight games.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 22.22222</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Goals From Set Pieces</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">metric</th>
+<th style="text-align: center;">percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Goals From Set Pieces</td>
+<td style="text-align: center;">22.222</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>In fact, 22.2% of Arsenal’s goals were from set pieces. As a team that is supposed to dominate games, this is concerning because it highlights how uninspired Arsenal’s creation was from open play relative to prior seasons.</p>
 </section>
+</section>
 <section id="individual-shot-creation-and-dribbling" class="level1">
 <h1>Individual Shot Creation and Dribbling</h1>
 <p>From a fan’s perspective, a lot of Arsenal’s lack of creation stems from the fact that they do not have enough world-class playmakers. Many players depend on the system rather than creating big chances by themselves. To gain insight into this, I checked how often players dribble before shots.</p>
+<section id="touches-before-shot" class="level2">
+<h2 class="anchored" data-anchor-id="touches-before-shot">Touches Before Shot</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -237,41 +499,119 @@ sample estimates:
 </div>
 </div>
 <p>For starters, the majority of Arsenal’s shots were first-time shots, meaning players either did not touch the ball before shooting or only took one touch to control it. This suggests that Arsenal players rarely created shots for themselves. They had to rely on movement and passing to score.</p>
+</section>
+<section id="defender-beating-actions" class="level2">
+<h2 class="anchored" data-anchor-id="defender-beating-actions">Defender-Beating Actions</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  total_shots shots_after_beating_defender proportion
-        &lt;int&gt;                        &lt;int&gt;      &lt;dbl&gt;
-1         291                           67      0.230</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  total_goals goals_after_beating_defender proportion
-        &lt;int&gt;                        &lt;int&gt;      &lt;dbl&gt;
-1          63                           15      0.238</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Shots and Goals After Beating a Defender</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">metric</th>
+<th style="text-align: center;">total</th>
+<th style="text-align: center;">count</th>
+<th style="text-align: center;">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Shots after beating defender</td>
+<td style="text-align: center;">291</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">0.230</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Goals after beating defender</td>
+<td style="text-align: center;">63</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">0.238</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>About 22% of Arsenal’s goals and shots came after an Arsenal player beat a defender on the dribble. For Arsenal to succeed offensively and score more goals, this number should go up next season.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 3
-   beaten_by          times_beaten_defender proportion
-   &lt;chr&gt;                              &lt;int&gt;      &lt;dbl&gt;
- 1 Bukayo Saka                           20     0.299 
- 2 Gabriel Martinelli                    10     0.149 
- 3 Leandro Trossard                       8     0.119 
- 4 Ethan Nwaneri                          6     0.0896
- 5 Martin Odegaard                        6     0.0896
- 6 Declan Rice                            5     0.0746
- 7 Jurrien Timber                         5     0.0746
- 8 Gabriel Jesus                          2     0.0299
- 9 Raheem Sterling                        2     0.0299
-10 Ben White                              1     0.0149
-11 Myles Lewis-Skelly                     1     0.0149
-12 Riccardo Calafiori                     1     0.0149</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Defender-Beating Actions Before Shots</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">beaten_by</th>
+<th style="text-align: center;">times_beaten_defender</th>
+<th style="text-align: center;">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Bukayo Saka</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.299</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gabriel Martinelli</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.149</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Leandro Trossard</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0.119</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Ethan Nwaneri</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.090</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Martin Odegaard</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.090</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Declan Rice</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.075</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Jurrien Timber</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.075</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gabriel Jesus</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.030</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Raheem Sterling</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.030</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Ben White</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Myles Lewis-Skelly</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.015</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Riccardo Calafiori</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.015</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>From the table, we see that Bukayo Saka beat the most players one-on-one despite missing half the season through injury. Despite that injury, he still had more defender-beating actions than Gabriel Martinelli and Leandro Trossard. This supports the idea that Arsenal’s attack depends heavily on Saka.</p>
+</section>
+<section id="left-side-vs.-right-side" class="level2">
+<h2 class="anchored" data-anchor-id="left-side-vs.-right-side">Left Side vs.&nbsp;Right Side</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -282,32 +622,122 @@ sample estimates:
 </div>
 </div>
 <p>I observed that the right side tends to produce higher upper-end xG chances, though this difference was not statistically significant. This may suggest potential but inconsistent quality from the right.</p>
+</section>
+<section id="dribbling-impact-by-zone" class="level2">
+<h2 class="anchored" data-anchor-id="dribbling-impact-by-zone">Dribbling Impact by Zone</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 6
-   zone p_value mean_beaten mean_not_beaten n_beaten n_not_beaten
-  &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;    &lt;int&gt;        &lt;int&gt;
-1     1  0.0555      0.638           0.390         4           23
-2     2  0.811       0.204           0.199        25           68
-3     3  0.277       0.0782          0.129        11           23
-4     4  0.399       0.0692          0.0711       12           19
-5     5  0.263       0.05            0.0395        6           19
-6     6  1           0.035           0.03          4            1
-7     8  1           0.02            0.02          2            4</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>xG After Beating a Defender by Zone</caption>
+<colgroup>
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 24%">
+<col style="width: 14%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">zone</th>
+<th style="text-align: center;">p_value</th>
+<th style="text-align: center;">mean_beaten</th>
+<th style="text-align: center;">mean_not_beaten</th>
+<th style="text-align: center;">n_beaten</th>
+<th style="text-align: center;">n_not_beaten</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.055</td>
+<td style="text-align: center;">0.637</td>
+<td style="text-align: center;">0.390</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.811</td>
+<td style="text-align: center;">0.204</td>
+<td style="text-align: center;">0.199</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0.277</td>
+<td style="text-align: center;">0.078</td>
+<td style="text-align: center;">0.129</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0.399</td>
+<td style="text-align: center;">0.069</td>
+<td style="text-align: center;">0.071</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.263</td>
+<td style="text-align: center;">0.050</td>
+<td style="text-align: center;">0.039</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1.000</td>
+<td style="text-align: center;">0.035</td>
+<td style="text-align: center;">0.030</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1.000</td>
+<td style="text-align: center;">0.020</td>
+<td style="text-align: center;">0.020</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>To evaluate whether Arsenal creates more dangerous chances when attackers beat defenders on the dribble, I compared xG in situations where a defender was beaten versus when they were not. In zone 1, the p-value is almost significant. In the small sample size, when Arsenal players beat their defender and pass into the box, it is often very dangerous.</p>
 <p><a href="https://youtu.be/62DBSHviDYY?si=A_4GZ9vwrz50L_ms&amp;t=88">Arsenal vs Ipswich GW18 — Saka dribble in zone 1</a></p>
 </section>
+</section>
 <section id="transition-attacking" class="level1">
 <h1>Transition Attacking</h1>
 <p>With Arsenal struggling to score against low blocks, the ability to capitalize on transition goals is important.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  total average_xg average_time_to_shoot num_goals goals_prop
-  &lt;int&gt;      &lt;dbl&gt;                 &lt;dbl&gt;     &lt;int&gt;      &lt;dbl&gt;
-1    36      0.180                  6.09        11      0.306</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Transition Shot Summary</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">total</th>
+<th style="text-align: center;">average_xg</th>
+<th style="text-align: center;">average_time_to_shoot</th>
+<th style="text-align: center;">num_goals</th>
+<th style="text-align: center;">goals_prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">6.088</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0.306</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Some fans believe Arsenal were too slow in transition compared to seasons prior. The average xG from transitions is higher than the total average, but the time to shoot is pretty long, which makes it easier for defenders to get back and protect their goal. Overall, Arsenal’s transition play lacked creativity, decision making, and efficiency.</p>
@@ -318,30 +748,101 @@ sample estimates:
 <h1>Transfer Recommendation: Eberechi Eze</h1>
 <p>After this season, many fans believed the main target should be a left winger. After playing around with the data, I believe the data supports this. Not everything was statistically significant, but football is a game of small margins.</p>
 <p>The player Arsenal have been linked with is Eberechi Eze. Eze is a talented playmaker, dribbler, and finisher. The main concern is that he is primarily a central attacking midfielder and not a traditional touchline winger.</p>
+<section id="current-left-wing-shot-zones" class="level2">
+<h2 class="anchored" data-anchor-id="current-left-wing-shot-zones">Current Left-Wing Shot Zones</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 3
-   zone shots proportion
-  &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-1     2    15     0.385 
-2     4    11     0.282 
-3     1     6     0.154 
-4     3     3     0.0769
-5     7     2     0.0513
-6     5     1     0.0256
-7     8     1     0.0256</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Leandro Trossard Shots by Zone</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">zone</th>
+<th style="text-align: center;">shots</th>
+<th style="text-align: center;">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">0.385</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0.282</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.154</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0.077</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.051</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.026</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.026</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
-   zone shots proportion
-  &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-1     2    12     0.429 
-2     4     7     0.25  
-3     1     6     0.214 
-4     3     2     0.0714
-5     6     1     0.0357</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Gabriel Martinelli Shots by Zone</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">zone</th>
+<th style="text-align: center;">shots</th>
+<th style="text-align: center;">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">0.429</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">0.250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.214</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.071</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.036</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+</section>
+<section id="player-heatmaps" class="level2">
+<h2 class="anchored" data-anchor-id="player-heatmaps">Player Heatmaps</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eberechi-eze-heatmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
@@ -361,6 +862,9 @@ sample estimates:
 </figure>
 </div>
 <p>From the heatmaps, we can see that all three players have a lot of touches on the touchline. Although Eze operated more frequently in the middle of the field, he has enough experience in wide areas to be useful for Arsenal on the left.</p>
+</section>
+<section id="eze-shot-map" class="level2">
+<h2 class="anchored" data-anchor-id="eze-shot-map">Eze Shot Map</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eberechi-eze-shotmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
@@ -372,6 +876,7 @@ sample estimates:
 <p><a href="https://youtu.be/ocwPznvEyqk?si=ZGSb3zYD68OXvGRn&amp;t=510">Eze driving inside and creating space</a></p>
 <p>Outside of the numbers and maps, these clips show Eze’s ability to play on the left. In the first clip, he plays a strong cross from the touchline. In the second clip, he receives the ball on the left, drives inside, attracts defenders, and opens space for a teammate.</p>
 <p>This type of player would help lighten the load on Saka and make Arsenal’s attack less predictable.</p>
+</section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>

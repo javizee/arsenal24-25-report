@@ -1,24 +1,76 @@
 # Arsenal 2024/25 Shot Analysis Functions
 # Refactored from the original Quarto analysis into named R functions.
-#
-# Usage:
-# source("arsenal_analysis_functions.R")
-# arsenal_24_25 <- load_and_clean_arsenal_data("arsenal_24_25.csv")
-# get_general_summary(arsenal_24_25)
-# plot_defensive_box_traffic(arsenal_24_25)
+# Uses knitr::kable() for tables to avoid extra package issues with gt.
 
 library(readr)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(knitr)
+library(scales)
 
+
+# -------------------------------------------------------------------------
+# Styling helpers
+# -------------------------------------------------------------------------
+
+#' Apply a clean report theme to Arsenal plots
+#'
+#' Creates a consistent ggplot theme for the report.
+#'
+#' This theme was chosen so the visualizations look less like raw notebook
+#' output and more like finished report graphics. The goal is to keep the plots
+#' readable, simple, and professional without distracting from the analysis.
+#'
+#' @return A ggplot theme.
+theme_arsenal <- function() {
+  theme_minimal(base_size = 13) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      plot.subtitle = element_text(size = 11, margin = margin(b = 8)),
+      axis.title = element_text(face = "bold"),
+      axis.text = element_text(color = "gray20"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      plot.caption = element_text(color = "gray40", size = 9),
+      plot.margin = margin(10, 12, 10, 12)
+    )
+}
+
+
+#' Format a table for the Quarto report
+#'
+#' Converts a data frame or tibble into a cleaner `knitr::kable()` table.
+#'
+#' This was chosen instead of raw tibble output because kable tables are easier
+#' to read in the rendered HTML report while avoiding extra package dependency
+#' problems. It gives the project a cleaner look without requiring `gt`.
+#'
+#' @param data A data frame or tibble.
+#' @param caption Optional table caption.
+#' @param digits Number of digits to display for numeric columns.
+#'
+#' @return A formatted knitr table.
+make_table <- function(data, caption = NULL, digits = 3) {
+  knitr::kable(
+    data,
+    caption = caption,
+    digits = digits,
+    align = "c"
+  )
+}
+
+
+# -------------------------------------------------------------------------
+# Data loading and summaries
+# -------------------------------------------------------------------------
 
 #' Load and clean Arsenal shot data
 #'
-#' Reads the Arsenal 2024/25 shot dataset from a CSV file and applies the
-#' basic cleaning choices used throughout the report: converting
-#' `opponent_formation` to character, converting `time_of_shot_after_entry`
-#' to numeric, and removing shots marked as defensive errors.
+#' Reads the Arsenal 2024/25 shot dataset from a CSV file and applies the basic
+#' cleaning choices used throughout the report: converting `opponent_formation`
+#' to character, converting `time_of_shot_after_entry` to numeric, and removing
+#' shots marked as defensive errors.
 #'
 #' These choices were made so the rest of the analysis compares repeatable
 #' attacking patterns rather than unusual mistakes by the opponent. Defensive
@@ -62,6 +114,24 @@ get_general_summary <- function(data) {
 }
 
 
+#' Create formatted overall summary table
+#'
+#' Formats the overall shot summary as a readable table.
+#'
+#' This was chosen so the opening summary looks polished in the HTML report
+#' instead of appearing as raw console output.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_general_summary <- function(data) {
+  make_table(
+    get_general_summary(data),
+    caption = "Overall Shot Summary"
+  )
+}
+
+
 #' Count shot results
 #'
 #' Counts how often each shot result appears, such as goals, saves, misses, or
@@ -77,8 +147,26 @@ get_general_summary <- function(data) {
 #' @return A tibble counting each shot result.
 count_shot_results <- function(data) {
   data |>
-    count(result) |>
-    arrange(desc(n))
+    count(result, name = "shots") |>
+    arrange(desc(shots))
+}
+
+
+#' Create formatted shot results table
+#'
+#' Formats shot result counts as a readable table.
+#'
+#' This was chosen to make the shot outcome distribution easier to scan in the
+#' final report.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_shot_results <- function(data) {
+  make_table(
+    count_shot_results(data),
+    caption = "Shot Results"
+  )
 }
 
 
@@ -96,9 +184,27 @@ count_shot_results <- function(data) {
 #' @return A tibble of player shot counts.
 count_frequent_shooters <- function(data, n_players = 6) {
   data |>
-    count(player) |>
-    arrange(desc(n)) |>
-    head(n_players)
+    count(player, name = "shots") |>
+    arrange(desc(shots)) |>
+    slice_head(n = n_players)
+}
+
+
+#' Create formatted frequent shooters table
+#'
+#' Formats the most frequent shooters as a readable table.
+#'
+#' This table makes it easier to see which players carried Arsenal's shot volume.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#' @param n_players Number of players to return.
+#'
+#' @return A formatted knitr table.
+table_frequent_shooters <- function(data, n_players = 6) {
+  make_table(
+    count_frequent_shooters(data, n_players),
+    caption = "Most Frequent Shooters"
+  )
 }
 
 
@@ -116,9 +222,28 @@ count_frequent_shooters <- function(data, n_players = 6) {
 #' @return A tibble of assist type counts.
 count_common_assist_types <- function(data, n_types = 6) {
   data |>
-    count(assist_type) |>
-    arrange(desc(n)) |>
-    head(n_types)
+    count(assist_type, name = "shots") |>
+    arrange(desc(shots)) |>
+    slice_head(n = n_types)
+}
+
+
+#' Create formatted assist type table
+#'
+#' Formats the most common assist types as a readable table.
+#'
+#' This was chosen so creation patterns can be read quickly without raw console
+#' formatting.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#' @param n_types Number of assist types to return.
+#'
+#' @return A formatted knitr table.
+table_common_assist_types <- function(data, n_types = 6) {
+  make_table(
+    count_common_assist_types(data, n_types),
+    caption = "Most Common Assist Types"
+  )
 }
 
 
@@ -137,9 +262,28 @@ count_common_assist_types <- function(data, n_types = 6) {
 #' @return A tibble of shot zone counts.
 count_common_shot_zones <- function(data, n_zones = 6) {
   data |>
-    count(zone) |>
-    arrange(desc(n)) |>
-    head(n_zones)
+    count(zone, name = "shots") |>
+    arrange(desc(shots)) |>
+    slice_head(n = n_zones)
+}
+
+
+#' Create formatted shot zone table
+#'
+#' Formats the most common shot zones as a readable table.
+#'
+#' This was chosen because the zone counts support the report's discussion of
+#' where Arsenal most often created shots from.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#' @param n_zones Number of zones to return.
+#'
+#' @return A formatted knitr table.
+table_common_shot_zones <- function(data, n_zones = 6) {
+  make_table(
+    count_common_shot_zones(data, n_zones),
+    caption = "Most Common Shot Zones"
+  )
 }
 
 
@@ -161,9 +305,32 @@ summarize_defensive_line <- function(data) {
     filter(final_third_entry != "set piece") |>
     group_by(defensive_line) |>
     summarise(total = n(), .groups = "drop") |>
-    mutate(percentage = total / sum(total) * 100)
+    mutate(percentage = round(total / sum(total) * 100, 1)) |>
+    arrange(desc(total))
 }
 
+
+#' Create formatted defensive line table
+#'
+#' Formats defensive line counts and percentages as a readable table.
+#'
+#' This was chosen to make the low-block pattern easier to read in the final
+#' report.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_defensive_line <- function(data) {
+  make_table(
+    summarize_defensive_line(data),
+    caption = "Opponent Defensive Line Types"
+  )
+}
+
+
+# -------------------------------------------------------------------------
+# Plots and statistical analyses
+# -------------------------------------------------------------------------
 
 #' Plot defenders in the box for Arsenal shots
 #'
@@ -181,7 +348,7 @@ summarize_defensive_line <- function(data) {
 plot_defensive_box_traffic <- function(data) {
   plot_data <- data |>
     filter(type_of_attack != "set piece")
-
+  
   ggplot(
     data = plot_data,
     aes(
@@ -189,14 +356,16 @@ plot_defensive_box_traffic <- function(data) {
       y = after_stat(count / sum(count) * 100)
     )
   ) +
-    geom_histogram() +
-    theme_minimal() +
+    geom_histogram(binwidth = 1, boundary = 0, color = "white", linewidth = 0.4) +
     scale_x_continuous(breaks = seq(0, 12, by = 1)) +
+    scale_y_continuous(labels = label_percent(scale = 1)) +
     labs(
-      title = "Arsenal Shots Face Heavy Defensive Traffic - Most Have 5+ Defenders in the Box",
+      title = "Arsenal Shots Faced Heavy Defensive Traffic",
+      subtitle = "Open-play shots often came with several defenders already in the box",
       x = "Number of Defenders in Box",
-      y = "Percentage"
-    )
+      y = "Percentage of Shots"
+    ) +
+    theme_arsenal()
 }
 
 
@@ -215,6 +384,34 @@ plot_defensive_box_traffic <- function(data) {
 #' @return An htest object from `t.test()`.
 test_pressure_xg_difference <- function(data) {
   t.test(xg ~ shot_under_pressure, data = data)
+}
+
+
+#' Summarize pressure test results in a table
+#'
+#' Extracts the most important values from the pressure t-test into a clean
+#' table.
+#'
+#' This was chosen because raw test output is hard for readers to scan. A small
+#' table makes the mean xG difference and p-value easier to interpret.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_pressure_xg_difference <- function(data) {
+  pressure_test <- test_pressure_xg_difference(data)
+  
+  pressure_summary <- tibble(
+    mean_xg_no_pressure = unname(pressure_test$estimate["mean in group no"]),
+    mean_xg_under_pressure = unname(pressure_test$estimate["mean in group yes"]),
+    difference = mean_xg_no_pressure - mean_xg_under_pressure,
+    p_value = pressure_test$p.value
+  )
+  
+  make_table(
+    pressure_summary,
+    caption = "Effect of Defensive Pressure on xG"
+  )
 }
 
 
@@ -245,10 +442,28 @@ summarize_attack_entries <- function(data) {
         TRUE ~ final_third_entry
       )
     ) |>
-    select(-final_third_entry) |>
     group_by(entry_type) |>
     summarise(count = n(), .groups = "drop") |>
-    mutate(prop = count / sum(count))
+    mutate(prop = round(count / sum(count), 3)) |>
+    arrange(desc(count))
+}
+
+
+#' Create formatted final-third entry table
+#'
+#' Formats the attack entry summary as a readable table.
+#'
+#' This was chosen because the entry table is central to the argument about
+#' Arsenal's wing and set-piece reliance.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_attack_entries <- function(data) {
+  make_table(
+    summarize_attack_entries(data),
+    caption = "Final-Third Entry Types"
+  )
 }
 
 
@@ -274,6 +489,28 @@ calculate_set_piece_goal_percentage <- function(data) {
 }
 
 
+#' Create formatted set-piece goal table
+#'
+#' Formats the set-piece goal percentage as a readable table.
+#'
+#' This was chosen so the single percentage is clearly labeled in the report.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_set_piece_goal_percentage <- function(data) {
+  set_piece_summary <- tibble(
+    metric = "Goals From Set Pieces",
+    percentage = calculate_set_piece_goal_percentage(data)
+  )
+  
+  make_table(
+    set_piece_summary,
+    caption = "Goals From Set Pieces"
+  )
+}
+
+
 #' Plot touches before shot
 #'
 #' Creates a percentage histogram of how many touches Arsenal players took before
@@ -295,13 +532,16 @@ plot_touches_before_shot <- function(data) {
       y = after_stat((count / sum(count)) * 100)
     )
   ) +
-    geom_histogram() +
+    geom_histogram(binwidth = 1, boundary = 0, color = "white", linewidth = 0.4) +
     scale_x_continuous(breaks = seq(0, 12, by = 2)) +
+    scale_y_continuous(labels = label_percent(scale = 1)) +
     labs(
-      title = "Touches Before Arsenal Shot",
+      title = "Touches Before Arsenal Shots",
+      subtitle = "Most shots came after zero or one touch",
       x = "Touches Before Shot",
-      y = "Percentage"
-    )
+      y = "Percentage of Shots"
+    ) +
+    theme_arsenal()
 }
 
 
@@ -353,6 +593,39 @@ summarize_goals_after_beating_defender <- function(data) {
 }
 
 
+#' Create formatted dribbling impact summary table
+#'
+#' Combines shot and goal summaries after beating a defender into one readable
+#' table.
+#'
+#' This was chosen because putting shots and goals together makes the dribbling
+#' impact easier to compare.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_defender_beating_summary <- function(data) {
+  shots <- summarize_shots_after_beating_defender(data) |>
+    transmute(
+      metric = "Shots after beating defender",
+      total = total_shots,
+      count = shots_after_beating_defender,
+      proportion = proportion
+    )
+  
+  goals <- summarize_goals_after_beating_defender(data) |>
+    transmute(
+      metric = "Goals after beating defender",
+      total = total_goals,
+      count = goals_after_beating_defender,
+      proportion = proportion
+    )
+  
+  bind_rows(shots, goals) |>
+    make_table(caption = "Shots and Goals After Beating a Defender")
+}
+
+
 #' Rank players by defender-beating actions before shots
 #'
 #' Counts which Arsenal players most often beat a defender before a shot.
@@ -373,6 +646,21 @@ rank_defender_beating_players <- function(data) {
     summarise(times_beaten_defender = n(), .groups = "drop") |>
     mutate(proportion = times_beaten_defender / sum(times_beaten_defender)) |>
     arrange(desc(times_beaten_defender))
+}
+
+
+#' Create formatted defender-beating player table
+#'
+#' Formats the defender-beating player rankings as a readable table.
+#'
+#' This was chosen to make the Saka reliance easier to see in the report.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_defender_beating_players <- function(data) {
+  rank_defender_beating_players(data) |>
+    make_table(caption = "Defender-Beating Actions Before Shots")
 }
 
 
@@ -406,25 +694,26 @@ prepare_wing_entry_data <- function(data) {
 #'
 #' Creates a boxplot comparing xG from left-side and right-side entries.
 #'
-#' A boxplot was chosen because it shows both the typical xG level and the
-#' spread of chance quality, including whether one side produces more high-end
-#' chances. This matches the report's question about whether Arsenal's right
-#' side creates better opportunities than the left.
+#' A boxplot was chosen because it shows both the typical xG level and the spread
+#' of chance quality, including whether one side produces more high-end chances.
+#' This matches the report's question about whether Arsenal's right side creates
+#' better opportunities than the left.
 #'
 #' @param data A cleaned Arsenal shot tibble.
 #'
 #' @return A ggplot boxplot.
 plot_xg_by_wing_entry <- function(data) {
   wings_data <- prepare_wing_entry_data(data)
-
+  
   ggplot(wings_data, aes(x = final_third_entry, y = xg)) +
-    geom_boxplot() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    geom_boxplot(width = 0.55, outlier.alpha = 0.6) +
     labs(
-      title = "xG by Final Third Entry",
-      x = "Entry Type",
-      y = "xG"
-    )
+      title = "Expected Goals by Side of Attack",
+      subtitle = "Comparing xG from left-side and right-side final-third entries",
+      x = "Side of Attack",
+      y = "Expected Goals (xG)"
+    ) +
+    theme_arsenal()
 }
 
 
@@ -434,9 +723,9 @@ plot_xg_by_wing_entry <- function(data) {
 #' shots where a defender was not beaten using a Wilcoxon test.
 #'
 #' A Wilcoxon test was chosen instead of a t-test because the analysis is split
-#' into smaller zone-level groups, where xG may be skewed and sample sizes may
-#' be limited. The zone-by-zone design also controls for location better than
-#' one overall comparison, since shot zone strongly affects xG.
+#' into smaller zone-level groups, where xG may be skewed and sample sizes may be
+#' limited. The zone-by-zone design also controls for location better than one
+#' overall comparison, since shot zone strongly affects xG.
 #'
 #' @param data A cleaned Arsenal shot tibble.
 #'
@@ -459,6 +748,22 @@ test_beating_defender_xg_by_zone <- function(data) {
       n_not_beaten = sum(player_beaten == "no"),
       .groups = "drop"
     )
+}
+
+
+#' Create formatted zone-level defender-beating test table
+#'
+#' Formats the Wilcoxon zone-level test output as a readable table.
+#'
+#' This was chosen because the raw test table contains several technical values,
+#' and formatting makes the zone comparison easier to read.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_beating_defender_xg_by_zone <- function(data) {
+  test_beating_defender_xg_by_zone(data) |>
+    make_table(caption = "xG After Beating a Defender by Zone")
 }
 
 
@@ -488,6 +793,22 @@ summarize_transition_shots <- function(data) {
 }
 
 
+#' Create formatted transition summary table
+#'
+#' Formats the transition attack summary as a readable table.
+#'
+#' This was chosen to make transition efficiency easier to read in the final
+#' report.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#'
+#' @return A formatted knitr table.
+table_transition_shots <- function(data) {
+  summarize_transition_shots(data) |>
+    make_table(caption = "Transition Shot Summary")
+}
+
+
 #' Summarize a player's shots by zone
 #'
 #' Counts a selected player's shots by zone and calculates the proportion of that
@@ -512,7 +833,24 @@ summarize_player_shots_by_zone <- function(data, player_name) {
 }
 
 
-#' Run the main Arsenal report tables
+#' Create formatted player shot zone table
+#'
+#' Formats a selected player's shot zone distribution as a readable table.
+#'
+#' This was chosen to make the player comparison cleaner in the transfer
+#' recommendation section.
+#'
+#' @param data A cleaned Arsenal shot tibble.
+#' @param player_name The player's name as it appears in the `player` column.
+#'
+#' @return A formatted knitr table.
+table_player_shots_by_zone <- function(data, player_name) {
+  summarize_player_shots_by_zone(data, player_name) |>
+    make_table(caption = paste(player_name, "Shots by Zone"))
+}
+
+
+#' Run the main Arsenal report summaries
 #'
 #' Produces a named list of the main summary tables and statistical tests used in
 #' the report.
@@ -550,3 +888,4 @@ run_arsenal_report_summaries <- function(data) {
     )
   )
 }
+

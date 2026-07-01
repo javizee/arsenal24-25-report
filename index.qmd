@@ -26,18 +26,40 @@ arsenal_24_25 <- load_and_clean_arsenal_data("arsenal_24_25.csv")
 
 # Introduction
 
-Going into the 2024/25 season, Arsenal were meant to be the favorites to win the Premier League, after finishing 2nd in back to back seasons. But ultimately, despite a deep run in the Champions League, their inconsistency in the Premier League was a shock to many. Specifically, despite their defense still being solid, their attacking numbers declined way more from the 2023/24 season prior.
+Going into the 2024/25 season, Arsenal were meant to be the favorites to win the Premier League after finishing 2nd in back-to-back seasons. But ultimately, despite a deep run in the Champions League, their inconsistency in the Premier League was a shock to many. Specifically, despite their defense still being solid, their attacking numbers declined way more from the 2023/24 season prior.
 
-In this report, with a dataframe of almost all the shots Arsenal took in the 24/25 Premier League season, I will highlight their strengths and weaknesses from the season, and what the team can change before the season starts.
+In this report, using a dataframe of almost all the shots Arsenal took in the 2024/25 Premier League season, I will highlight their strengths and weaknesses from the season and what the team can change before the next season starts.
 
 # Arsenal's Shooting Profile
 
-```{r general-information}
-get_general_summary(arsenal_24_25)
-count_shot_results(arsenal_24_25)
-count_frequent_shooters(arsenal_24_25)
-count_common_assist_types(arsenal_24_25)
-count_common_shot_zones(arsenal_24_25)
+## Overall Summary
+
+```{r general-summary}
+table_general_summary(arsenal_24_25)
+```
+
+## Shot Outcomes
+
+```{r shot-results}
+table_shot_results(arsenal_24_25)
+```
+
+## Leading Shooters
+
+```{r frequent-shooters}
+table_frequent_shooters(arsenal_24_25)
+```
+
+## Assist Types
+
+```{r assist-types}
+table_common_assist_types(arsenal_24_25)
+```
+
+## Shot Zones
+
+```{r shot-zones-table}
+table_common_shot_zones(arsenal_24_25)
 ```
 
 ![Shot Zones](img/shot-zones.png){width="30%"}
@@ -48,8 +70,15 @@ From the diagram and information above, we can tell that a majority of Arsenal's
 
 The narrative around Arsenal being favorites may have caused other teams' defensive styles of play against them to change.
 
+## Defensive Line
+
+```{r defensive-line}
+table_defensive_line(arsenal_24_25)
+```
+
+## Defensive Traffic
+
 ```{r defensive-traffic}
-summarize_defensive_line(arsenal_24_25)
 plot_defensive_box_traffic(arsenal_24_25)
 ```
 
@@ -63,10 +92,12 @@ As seen from the histogram, teams mostly have at least 5 players excluding the g
 
 As one can see in the photo above from Arsenal vs Brentford in January, Brentford had all their players behind the ball. This made it very difficult for Arsenal to create a shot that was very likely to score.
 
+## Pressure and Shot Quality
+
 As a result, teams often get pressure on the player shooting.
 
 ```{r pressure-test}
-test_pressure_xg_difference(arsenal_24_25)
+table_pressure_xg_difference(arsenal_24_25)
 ```
 
 Shots taken under defensive pressure had an average xG of 0.14, while shots without pressure had an average xG of 0.24. This difference is large enough that it is very unlikely to be due to chance, showing that pressure greatly reduces the quality of Arsenal's chances.
@@ -75,16 +106,20 @@ Shots taken under defensive pressure had an average xG of 0.14, while shots with
 
 To find what areas Arsenal attack in better than others in possession, I divided the area into 5 spaces: the left halfspace, right halfspace, middle, left, and right. I also looked at shots from set pieces, which are restarts that the referee awards, such as corner kicks and free kicks.
 
+## Final-Third Entries
+
 ```{r attack-entries}
-summarize_attack_entries(arsenal_24_25)
+table_attack_entries(arsenal_24_25)
 ```
 
 From the table, we see that Arsenal are mostly reliant on attacking from the wings and right halfspace, with less emphasis on the left halfspace and middle. This makes sense because players such as Saka, Odegaard, Martinelli, and Trossard often take up these spaces.
 
+## Set-Piece Reliance
+
 This season, Arsenal were also known to heavily rely on set pieces in tight games.
 
 ```{r set-pieces}
-calculate_set_piece_goal_percentage(arsenal_24_25)
+table_set_piece_goal_percentage(arsenal_24_25)
 ```
 
 In fact, 22.2% of Arsenal's goals were from set pieces. As a team that is supposed to dominate games, this is concerning because it highlights how uninspired Arsenal's creation was from open play relative to prior seasons.
@@ -93,24 +128,29 @@ In fact, 22.2% of Arsenal's goals were from set pieces. As a team that is suppos
 
 From a fan's perspective, a lot of Arsenal's lack of creation stems from the fact that they do not have enough world-class playmakers. Many players depend on the system rather than creating big chances by themselves. To gain insight into this, I checked how often players dribble before shots.
 
+## Touches Before Shot
+
 ```{r touches-before-shot}
 plot_touches_before_shot(arsenal_24_25)
 ```
 
 For starters, the majority of Arsenal's shots were first-time shots, meaning players either did not touch the ball before shooting or only took one touch to control it. This suggests that Arsenal players rarely created shots for themselves. They had to rely on movement and passing to score.
 
+## Defender-Beating Actions
+
 ```{r defender-beating-summary}
-summarize_shots_after_beating_defender(arsenal_24_25)
-summarize_goals_after_beating_defender(arsenal_24_25)
+table_defender_beating_summary(arsenal_24_25)
 ```
 
 About 22% of Arsenal's goals and shots came after an Arsenal player beat a defender on the dribble. For Arsenal to succeed offensively and score more goals, this number should go up next season.
 
 ```{r best-dribblers}
-rank_defender_beating_players(arsenal_24_25)
+table_defender_beating_players(arsenal_24_25)
 ```
 
 From the table, we see that Bukayo Saka beat the most players one-on-one despite missing half the season through injury. Despite that injury, he still had more defender-beating actions than Gabriel Martinelli and Leandro Trossard. This supports the idea that Arsenal's attack depends heavily on Saka.
+
+## Left Side vs. Right Side
 
 ```{r wing-entry-xg}
 plot_xg_by_wing_entry(arsenal_24_25)
@@ -118,8 +158,10 @@ plot_xg_by_wing_entry(arsenal_24_25)
 
 I observed that the right side tends to produce higher upper-end xG chances, though this difference was not statistically significant. This may suggest potential but inconsistent quality from the right.
 
+## Dribbling Impact by Zone
+
 ```{r beating-defender-zone-test}
-test_beating_defender_xg_by_zone(arsenal_24_25)
+table_beating_defender_xg_by_zone(arsenal_24_25)
 ```
 
 To evaluate whether Arsenal creates more dangerous chances when attackers beat defenders on the dribble, I compared xG in situations where a defender was beaten versus when they were not. In zone 1, the p-value is almost significant. In the small sample size, when Arsenal players beat their defender and pass into the box, it is often very dangerous.
@@ -131,7 +173,7 @@ To evaluate whether Arsenal creates more dangerous chances when attackers beat d
 With Arsenal struggling to score against low blocks, the ability to capitalize on transition goals is important.
 
 ```{r transition-summary}
-summarize_transition_shots(arsenal_24_25)
+table_transition_shots(arsenal_24_25)
 ```
 
 Some fans believe Arsenal were too slow in transition compared to seasons prior. The average xG from transitions is higher than the total average, but the time to shoot is pretty long, which makes it easier for defenders to get back and protect their goal. Overall, Arsenal's transition play lacked creativity, decision making, and efficiency.
@@ -146,10 +188,14 @@ After this season, many fans believed the main target should be a left winger. A
 
 The player Arsenal have been linked with is Eberechi Eze. Eze is a talented playmaker, dribbler, and finisher. The main concern is that he is primarily a central attacking midfielder and not a traditional touchline winger.
 
+## Current Left-Wing Shot Zones
+
 ```{r left-wing-shot-zones}
-summarize_player_shots_by_zone(arsenal_24_25, "Leandro Trossard")
-summarize_player_shots_by_zone(arsenal_24_25, "Gabriel Martinelli")
+table_player_shots_by_zone(arsenal_24_25, "Leandro Trossard")
+table_player_shots_by_zone(arsenal_24_25, "Gabriel Martinelli")
 ```
+
+## Player Heatmaps
 
 ![Eberechi Eze 2023/2024 Heatmap](img/eberechi-eze-heatmap.png){width="70%"}
 
@@ -158,6 +204,8 @@ summarize_player_shots_by_zone(arsenal_24_25, "Gabriel Martinelli")
 ![Leandro Trossard 2024/2025 Heatmap](img/leandro-trossard-heatmap.png){width="70%"}
 
 From the heatmaps, we can see that all three players have a lot of touches on the touchline. Although Eze operated more frequently in the middle of the field, he has enough experience in wide areas to be useful for Arsenal on the left.
+
+## Eze Shot Map
 
 ![Eberechi Eze 2024/2025 Shotmap](img/eberechi-eze-shotmap.png){width="70%"}
 
