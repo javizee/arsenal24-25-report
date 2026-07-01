@@ -298,6 +298,7 @@ plot_touches_before_shot <- function(data) {
     geom_histogram() +
     scale_x_continuous(breaks = seq(0, 12, by = 2)) +
     labs(
+      title = "Touches Before Arsenal Shot",
       x = "Touches Before Shot",
       y = "Percentage"
     )

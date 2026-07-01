@@ -152,12 +152,18 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<p>Now that Arsenal are favorites, Premier League teams “respect” them more, meaning they give Arsenal more space to play out the back and advance towards the opposing teams’ box. This usually means they sit deeper and give Arsenal more space in their own defensive third, allowing them to build out from the back with relative ease. Arsenal’s technical quality and passing precision make them very effective at progressing the ball through these early phases.</p>
+<p>However, as soon as Arsenal approaches the final third, all that space disappears. Opponents put more defenders between the ball and the goal, making it harder for Arsenal to pass and create more threatening shots.</p>
+<p>In contrast, in previous seasons when Arsenal weren’t seen as serious title contenders, teams were more willing to press higher and give up more space behind them. This gave Arsenal more room in attacking areas closer to the opponent goal, enabling quicker transitions and more free-flowing soccer in the final third.</p>
+<p>As seen from the histogram, teams mostly have at least 5 players excluding the goalkeeper defending the goal in their own box, whenever Arsenal take a shot.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/brentford-defending.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>Defending example</figcaption>
 </figure>
 </div>
+<p>As one can see in the photo above from Arsenal vs Brentford in January. With Brentford having all their players behind the ball, it’s very difficult for Arsenal to have a shot that’s very likely of scoring. This was a common theme in Arsenal games, and one that proved very difficult for Arsenal.</p>
+<p>As a result teams always get pressure on the player shooting which puts them off.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -173,6 +179,8 @@ sample estimates:
         0.2401887         0.1446196 </code></pre>
 </div>
 </div>
+<p>Shots taken under defensive pressure had an average xG of 0.14, while shots without pressure had an average xG of 0.24. This difference is large enough that it’s very unlikely to be due to chance, showing that pressure greatly reduces the quality of Arsenal’s chances.</p>
+<p>To find what areas Arsenal attack in better than others in possession, I divided the area into 5 spaces: the left halfspace, right halfspace, middle, left, and right. Halfspaces are channels located between the central lanes and the wide areas of the pitch. I also looked at shots from set pieces, which are restarts that the referee awards, such as corner kicks and free kicks.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
@@ -186,11 +194,15 @@ sample estimates:
 6 set piece          60 0.221 </code></pre>
 </div>
 </div>
+<p>From the table, we see that Arsenal are mostly reliant on attacking from the wings and right halfspace, with less emphasis on the left halfspace and middle. This makes sense, our most natural attacking players such as Saka, Odegaard, Martinelli, and Trossard take these spaces up so they get the most touches and influence in attack. Yet we still struggle to find that final shot that leads to a goal.</p>
+<p>This season, Arsenal were known to heavily rely on set pieces in tight games.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 22.22222</code></pre>
 </div>
 </div>
+<p>In fact 22.2% of Arsenal’s goals were from set pieces. As a team that is supposed to dominate games, this is very concerning because it highlights how uninspired our creation was from open play relative to prior seasons. The numbers and eye test prove this.</p>
+<p>From a fan’s perspective, I think a lot of our lack of creation stems from the fact that we don’t have world class playmakers on this team. A lot of our players depend on the system, rather than making big plays by themselves. To gain insight into this, I checked how often our players dribble and where.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -200,6 +212,7 @@ sample estimates:
 </div>
 </div>
 </div>
+<p>For starters, majority of our shots were first time shots, meaning they didn’t have to touch the ball before shooting, or they only took one touch to control it. What this shows is that our players very rarely created shots for themselves. They had to rely on their movement and passing to score. Obviously this is difficult to maintain at a high level, but still when teams suffocate the passing lanes, dribbling and beating your defender with skills is needed, but our team can’t and doesn’t do that.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
@@ -214,6 +227,7 @@ sample estimates:
 1          63                           15      0.238</code></pre>
 </div>
 </div>
+<p>22% of our goals and shots came after an Arsenal player beats a defender on the dribble. For us to succeed offensively and score more goals, I’d want to see this number go up next season. Hopefully, in the transfer window Arsenal can buy a player with this ability.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
@@ -242,6 +256,7 @@ sample estimates:
 </div>
 </div>
 </div>
+<p>I observed that the right side tends to produce higher upper-end xG chances, though this difference wasn’t statistically significant. This may suggest potential but inconsistent quality from the right.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 6
@@ -256,7 +271,11 @@ sample estimates:
 7     8  1           0.02            0.02          2            4</code></pre>
 </div>
 </div>
+<p>To evaluate whether Arsenal creates more dangerous chances when attackers beat defenders on the dribble, I compared xg in situations where a defender was beaten versus when they were not. In zone 1, you can see that the p value is almost significant. In the small sample size that we have, when our players beat their defender and pass into the box, it’s almost always a free goal. With better wingers we can see more of this. An example is in the Arsenal vs Ipswich game in Gameweek 18.</p>
 <p><a href="https://youtu.be/62DBSHviDYY?si=A_4GZ9vwrz50L_ms&amp;t=88">Arsenal vs Ipswich GW18 — Saka dribble in zone 1</a></p>
+<p>In the few instances that aren’t shown in this dataset due to the crosses not being completed, that’s because our strikers didn’t make contact with the ball, but with the addition of Viktor Gyokeres, a more pure striker and goalscorer, he’ll be scoring these more often and that’s how we can get to use him more.</p>
+<p>For the rest of the shooting zones, there are other factors to account for such as angle and how many defenders are between the ball and the goal, so the xg is more random.</p>
+<p>With this issue of struggling to score against low blocks, the ability to capitalize on transition goals where defenses are caught out is vital.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
@@ -265,7 +284,11 @@ sample estimates:
 1    36      0.180                  6.09        11      0.306</code></pre>
 </div>
 </div>
+<p>Some fans believe that Arsenal were too slow in transition compared to seasons prior. I took a look at all shots from transition. The average xg from transitions is higher than the total average, but the time to shoot is pretty long, which makes it easier for defenders to get back and protect their goal. Overall, our transition lacked creativity, decision making, and efficiency.</p>
 <p><a href="https://youtu.be/siDxiv91yTI?si=EMSB9jd4TNkVSauI">Arsenal transition example — Martinelli GW decision making</a></p>
+<p>As you can see there are many issues in this shot. Martinelli makes a really bad decision to shoot with the defender recovering to block the goal, but also Martinelli has no options that he can pass to for a better shot. It all looks very bland and unexciting. This was a common theme me and many other fans noticed from watching. We scored 30% of our transition goals, but it could’ve been better.</p>
+<p>After this season, many fans believed the main target should be a Left Wing, and after playing around with the data, I believe the data supports this. The statistics major in me is troubled because not everything was statistically significant, however, the football fan, watcher, and even player part of me knows the saying that “Football is a game of small margins”.</p>
+<p>The player that the media is saying that Arsenal is monitoring is Eberechi Eze. Eze is a talented playmaker, dribbler, and finisher. The main concern is that he’s primarily a Center Attacking Mid and not a touchline Winger.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 3
@@ -308,14 +331,21 @@ sample estimates:
 <figcaption>Leandro Trossard 2024/2025 Heatmap</figcaption>
 </figure>
 </div>
+<p>From the heatmaps we can see that all three players have a lot of touches on the touchline, so although Eze operated more frequently in the middle of the field last season, he has enough experience that could be useful for Arsenal on the left. That season, Eze also had a 52% dribble success rate which is higher than Martinelli(35%) and Trossard(51%), while also scoring more goals (11) than Martinelli and Trossard.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eberechi-eze-shotmap.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>Eberechi Eze 2024/2025 Shotmap</figcaption>
 </figure>
 </div>
+<p>Knowing Eze as a player and seeing both his heatmap and shotmap, I would come to the conclusion that he simply “generates football”. What that means in the football community is that no matter what position on the field he’s playing, I would expect him to make an impact. The reason I say this is that he can shoot, dribble, and pass in the middle and left part of the field.</p>
+<p>After being such a robotic and bland team in offense, this is exactly what I think Arsenal need to take a big step towards winning a trophy. ```</p>
 <p><a href="https://youtu.be/ocwPznvEyqk?si=akr-F37EoKj9Nomt&amp;t=423">Eze left-side cross</a></p>
 <p><a href="https://youtu.be/ocwPznvEyqk?si=ZGSb3zYD68OXvGRn&amp;t=510">Eze driving inside and creating space</a></p>
+<p>Outside of the numbers and maps, I provided two clips that showcase Eze’s ability to play on the left. In the first link, after being trapped on the touchline, he effortlessly plays a pinpoint cross that his teammate is easily able to tap into the goal. So, he definitely has the technical ability to cross on his left foot that Martinelli and Trossard struggled with.</p>
+<p>In the second clip, he receives the ball all the way on the left in midfield, and drives into the middle and makes the defenders all attract towards him in anticipation of him shooting, but he plays a pass to the right for his teammate to be wide open to shoot.</p>
+<p>This is an example of Eze having so much gravity as a dribbler and playmaker, meaning that if he can’t open up space for himself, then he’ll definitely open up space for another teammate. This relates back to what I was saying about lightening the load off the right off our star player Saka.</p>
+<p>For me and other fans, this signing is a no brainer.</p>
 </section>
 
 </main>
